@@ -1,185 +1,322 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-br">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sistema de Sinais - Roleta</title>
+    <title>Sistema de Sinais para Roleta</title>
     <style>
-        :root {
-            --primary-color: #ff3366;
-            --secondary-color: #333;
-            --success-color: #28a745;
-            --danger-color: #dc3545;
-            --light-color: #f4f4f4;
-            --dark-color: #222;
-        }
-        
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
-        
+
         body {
-            background-color: #1a1a1a;
-            color: white;
+            background-color: #121212;
+            color: #f0f0f0;
             min-height: 100vh;
         }
-        
+
         .container {
             width: 100%;
             max-width: 1200px;
             margin: 0 auto;
             padding: 20px;
         }
-        
+
+        /* Login Page */
         .login-container {
-            max-width: 400px;
-            margin: 50px auto;
-            background-color: rgba(0, 0, 0, 0.7);
-            padding: 30px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            background: linear-gradient(135deg, #1a1a1a, #000000);
+        }
+
+        .login-box {
+            background-color: rgba(30, 30, 30, 0.8);
+            padding: 40px;
             border-radius: 10px;
-            box-shadow: 0 0 20px rgba(255, 51, 102, 0.5);
-            animation: glow 2s infinite alternate;
-        }
-        
-        @keyframes glow {
-            from {
-                box-shadow: 0 0 10px rgba(255, 51, 102, 0.5);
-            }
-            to {
-                box-shadow: 0 0 20px rgba(255, 51, 102, 0.8);
-            }
-        }
-        
-        h1, h2, h3 {
-            color: var(--primary-color);
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+            width: 90%;
+            max-width: 400px;
             text-align: center;
+        }
+
+        .login-box h2 {
+            margin-bottom: 30px;
+            color: #ff3e3e;
+            font-size: 28px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .login-box img {
+            width: 120px;
             margin-bottom: 20px;
         }
-        
-        .form-group {
+
+        .input-group {
             margin-bottom: 20px;
+            position: relative;
         }
-        
-        .form-group label {
-            display: block;
-            margin-bottom: 5px;
-            color: #ddd;
-        }
-        
-        .form-group input {
+
+        .input-group input {
             width: 100%;
-            padding: 10px;
-            background-color: rgba(255, 255, 255, 0.1);
-            border: 1px solid #444;
+            padding: 12px 15px;
+            border: none;
+            background-color: #333;
+            color: #fff;
             border-radius: 5px;
-            color: white;
             font-size: 16px;
-            transition: all 0.3s;
+            transition: all 0.3s ease;
         }
-        
-        .form-group input:focus {
+
+        .input-group input:focus {
             outline: none;
-            border-color: var(--primary-color);
-            box-shadow: 0 0 5px rgba(255, 51, 102, 0.5);
+            background-color: #444;
+            box-shadow: 0 0 5px rgba(255, 62, 62, 0.5);
         }
-        
-        .btn {
-            display: inline-block;
-            padding: 10px 20px;
-            background-color: var(--primary-color);
+
+        .login-btn {
+            width: 100%;
+            padding: 12px;
+            background: linear-gradient(45deg, #ff3e3e, #ff7676);
             color: white;
             border: none;
             border-radius: 5px;
-            cursor: pointer;
             font-size: 16px;
-            transition: all 0.3s;
-            text-transform: uppercase;
             font-weight: bold;
-            letter-spacing: 1px;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
         }
-        
-        .btn:hover {
-            background-color: #ff1a4f;
+
+        .login-btn:hover {
             transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(255, 51, 102, 0.4);
+            box-shadow: 0 4px 8px rgba(255, 62, 62, 0.3);
         }
-        
-        .btn-block {
-            display: block;
-            width: 100%;
+
+        .login-btn:active {
+            transform: translateY(0);
         }
-        
-        .btn-danger {
-            background-color: var(--danger-color);
+
+        /* Dashboard */
+        header {
+            background-color: #1e1e1e;
+            padding: 15px 0;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
         }
-        
-        .btn-danger:hover {
-            background-color: #c82333;
+
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
-        
-        .btn-success {
-            background-color: var(--success-color);
-        }
-        
-        .btn-success:hover {
-            background-color: #218838;
-        }
-        
-        .status {
-            text-align: center;
+
+        .logo {
+            color: #ff3e3e;
             font-size: 24px;
             font-weight: bold;
-            margin: 20px 0;
-            padding: 20px;
+        }
+
+        .logout-btn {
+            background-color: transparent;
+            color: #ff3e3e;
+            border: 1px solid #ff3e3e;
+            padding: 8px 16px;
             border-radius: 5px;
-            background-color: rgba(0, 0, 0, 0.5);
+            cursor: pointer;
+            transition: all 0.3s ease;
         }
-        
-        .status.on {
-            color: #2ecc71;
-            text-shadow: 0 0 10px rgba(46, 204, 113, 0.5);
+
+        .logout-btn:hover {
+            background-color: #ff3e3e;
+            color: #fff;
         }
-        
-        .status.off {
-            color: #e74c3c;
-            text-shadow: 0 0 10px rgba(231, 76, 60, 0.5);
+
+        .status-container {
+            display: flex;
+            align-items: center;
+            margin: 20px 0;
+            padding: 15px;
+            background-color: #1e1e1e;
+            border-radius: 8px;
         }
-        
+
+        .status-indicator {
+            display: inline-block;
+            width: 15px;
+            height: 15px;
+            border-radius: 50%;
+            margin-right: 10px;
+        }
+
+        .status-on {
+            background-color: #4CAF50;
+            box-shadow: 0 0 8px #4CAF50;
+        }
+
+        .status-off {
+            background-color: #f44336;
+            box-shadow: 0 0 8px #f44336;
+        }
+
+        /* Member Dashboard */
         .signal-box {
-            background-color: rgba(0, 0, 0, 0.7);
-            padding: 20px;
-            border-radius: 10px;
             margin-top: 20px;
-            border: 1px solid #444;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            padding: 20px;
+            background-color: #1e1e1e;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
         }
-        
+
+        .signal-box h3 {
+            margin-bottom: 15px;
+            color: #ff3e3e;
+            font-size: 20px;
+        }
+
         .signal-message {
-            font-size: 24px;
+            padding: 15px;
+            background-color: #2d2d2d;
+            border-left: 4px solid #ff3e3e;
+            border-radius: 4px;
+            font-size: 18px;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.02); }
+            100% { transform: scale(1); }
+        }
+
+        .no-signal {
+            color: #888;
             text-align: center;
             padding: 20px;
-            background-color: rgba(255, 51, 102, 0.1);
-            border-radius: 5px;
-            margin: 20px 0;
-            color: white;
-            text-shadow: 0 0 5px rgba(255, 255, 255, 0.5);
-            letter-spacing: 1px;
         }
-        
+
+        .schedule-box {
+            margin-top: 30px;
+            padding: 20px;
+            background-color: #1e1e1e;
+            border-radius: 8px;
+        }
+
+        .schedule-box h3 {
+            margin-bottom: 15px;
+            color: #ff3e3e;
+        }
+
+        .schedule-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+
+        .schedule-table th, .schedule-table td {
+            padding: 10px;
+            text-align: center;
+            border-bottom: 1px solid #333;
+        }
+
+        .schedule-table th {
+            background-color: #2d2d2d;
+            color: #ff7676;
+        }
+
+        /* Admin Panel */
+        .admin-panel {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .admin-section {
+            background-color: #1e1e1e;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .admin-section h3 {
+            color: #ff3e3e;
+            margin-bottom: 15px;
+            font-size: 20px;
+        }
+
+        .toggle-signals {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .toggle-switch {
+            position: relative;
+            display: inline-block;
+            width: 60px;
+            height: 30px;
+            margin-right: 15px;
+        }
+
+        .toggle-switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #333;
+            transition: .4s;
+            border-radius: 30px;
+        }
+
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 22px;
+            width: 22px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+
+        input:checked + .slider {
+            background-color: #4CAF50;
+        }
+
+        input:checked + .slider:before {
+            transform: translateX(30px);
+        }
+
         .numbers-grid {
             display: grid;
             grid-template-columns: repeat(6, 1fr);
             gap: 10px;
-            margin: 20px 0;
+            margin-bottom: 20px;
         }
-        
+
+        @media (max-width: 600px) {
+            .numbers-grid {
+                grid-template-columns: repeat(4, 1fr);
+            }
+        }
+
         .number-btn {
-            background-color: #333;
+            background: linear-gradient(45deg, #1e1e1e, #2d2d2d);
             color: white;
-            border: 2px solid #555;
+            border: 2px solid #333;
             border-radius: 50%;
             width: 50px;
             height: 50px;
@@ -189,439 +326,485 @@
             font-size: 18px;
             font-weight: bold;
             cursor: pointer;
-            transition: all 0.3s;
+            transition: all 0.2s ease;
         }
-        
+
         .number-btn:hover {
-            background-color: #444;
             transform: scale(1.05);
+            border-color: #ff3e3e;
         }
-        
-        .number-btn.red {
-            background-color: #e74c3c;
-        }
-        
-        .number-btn.black {
-            background-color: #2c3e50;
-        }
-        
-        .number-btn.green {
-            background-color: #27ae60;
-        }
-        
+
         .number-btn.selected {
-            background-color: var(--primary-color);
+            background: linear-gradient(45deg, #ff3e3e, #ff7676);
             border-color: white;
             transform: scale(1.1);
-            box-shadow: 0 0 10px rgba(255, 51, 102, 0.7);
+            box-shadow: 0 0 10px rgba(255, 62, 62, 0.5);
         }
-        
-        .actions {
+
+        .btn-zero {
+            background: linear-gradient(45deg, #006400, #008000);
+            grid-column: span 2;
+            width: 100%;
+            border-radius: 25px;
+        }
+
+        .action-buttons {
             display: flex;
-            justify-content: space-between;
+            gap: 10px;
             margin-top: 20px;
         }
-        
-        .actions button {
+
+        .action-btn {
             flex: 1;
-            margin: 0 5px;
+            padding: 12px;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.2s ease;
         }
-        
-        .header {
+
+        .send-btn {
+            background: linear-gradient(45deg, #4CAF50, #45a049);
+            color: white;
+        }
+
+        .clear-btn {
+            background: linear-gradient(45deg, #f44336, #d32f2f);
+            color: white;
+        }
+
+        .action-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .selected-numbers {
+            margin-top: 15px;
+            padding: 10px;
+            background-color: #2d2d2d;
+            border-radius: 5px;
+            min-height: 40px;
+        }
+
+        .current-signals {
+            margin-top: 20px;
+        }
+
+        .signal-item {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 10px 0;
-            margin-bottom: 30px;
-            border-bottom: 1px solid #444;
-        }
-        
-        .logo {
-            font-size: 24px;
-            font-weight: bold;
-            color: var(--primary-color);
-        }
-        
-        .nav button {
-            background: none;
-            border: none;
-            color: white;
-            cursor: pointer;
-            font-size: 16px;
-            margin-left: 20px;
-            transition: all 0.3s;
-        }
-        
-        .nav button:hover {
-            color: var(--primary-color);
-        }
-        
-        .hidden {
-            display: none;
-        }
-        
-        .fade-in {
+            padding: 15px;
+            background-color: #2d2d2d;
+            border-radius: 5px;
+            margin-bottom: 10px;
             animation: fadeIn 0.5s;
         }
-        
+
         @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
         }
-        
-        .shake {
-            animation: shake 0.5s;
+
+        .delete-signal {
+            background-color: transparent;
+            color: #f44336;
+            border: none;
+            cursor: pointer;
+            font-size: 18px;
+            transition: all 0.2s ease;
         }
-        
-        @keyframes shake {
-            0%, 100% { transform: translateX(0); }
-            10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
-            20%, 40%, 60%, 80% { transform: translateX(5px); }
+
+        .delete-signal:hover {
+            transform: scale(1.2);
+            color: #d32f2f;
         }
-        
-        .pulse {
-            animation: pulse 2s infinite;
-        }
-        
-        @keyframes pulse {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.05); }
-            100% { transform: scale(1); }
+
+        /* Responsive Adjustments */
+        @media (max-width: 768px) {
+            .login-box {
+                padding: 20px;
+            }
+            
+            .action-buttons {
+                flex-direction: column;
+            }
+            
+            .numbers-grid {
+                grid-template-columns: repeat(4, 1fr);
+            }
+            
+            .number-btn {
+                width: 40px;
+                height: 40px;
+                font-size: 16px;
+            }
         }
     </style>
 </head>
 <body>
-    <!-- Login Screen -->
-    <div id="login-screen" class="container">
-        <div class="login-container fade-in">
-            <h1>Sistema de Sinais</h1>
-            <div class="form-group">
-                <label for="username">Usuário</label>
-                <input type="text" id="username" placeholder="Digite seu usuário">
+    <!-- Login Page (Default View) -->
+    <div id="login-page" class="login-container">
+        <div class="login-box">
+            <h2>Sistema de Sinais</h2>
+            <img src="/api/placeholder/120/120" alt="Logo">
+            <div class="input-group">
+                <input type="text" id="username" placeholder="Nome de usuário">
             </div>
-            <div class="form-group">
-                <label for="password">Senha</label>
-                <input type="password" id="password" placeholder="Digite sua senha">
+            <div class="input-group">
+                <input type="password" id="password" placeholder="Senha">
             </div>
-            <button id="login-btn" class="btn btn-block">Entrar</button>
-            <p id="login-error" style="color: #e74c3c; margin-top: 10px; text-align: center; display: none;">Usuário ou senha incorretos.</p>
+            <button class="login-btn" onclick="login()">ENTRAR</button>
         </div>
     </div>
 
     <!-- Member Dashboard -->
-    <div id="member-dashboard" class="container hidden">
-        <div class="header">
-            <div class="logo">Roleta Sinais</div>
-            <div class="nav">
-                <button id="logout-btn">Sair</button>
+    <div id="member-dashboard" style="display: none;">
+        <header>
+            <div class="container header-container">
+                <div class="logo">Sistema de Sinais para Roleta</div>
+                <button class="logout-btn" onclick="logout()">Sair</button>
             </div>
-        </div>
+        </header>
         
-        <div class="status" id="signal-status">SINAIS OFF</div>
-        
-        <div class="signal-box">
-            <h2>Sinal Atual</h2>
-            <div class="signal-message" id="current-signal">Aguardando novo sinal...</div>
+        <div class="container">
+            <div class="status-container">
+                <span id="signal-status-indicator" class="status-indicator status-off"></span>
+                <span id="signal-status-text">Sinais: DESATIVADOS</span>
+            </div>
+            
+            <div class="signal-box">
+                <h3>Sinal Atual</h3>
+                <div id="current-signal" class="no-signal">
+                    Nenhum sinal disponível no momento. Aguarde o próximo sinal.
+                </div>
+            </div>
+            
+            <div class="schedule-box">
+                <h3>Horários de Funcionamento</h3>
+                <table class="schedule-table">
+                    <thead>
+                        <tr>
+                            <th>Dias</th>
+                            <th>Horário</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Segunda a Sexta</td>
+                            <td>21:30</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
 
     <!-- Admin Dashboard -->
-    <div id="admin-dashboard" class="container hidden">
-        <div class="header">
-            <div class="logo">Roleta Sinais - ADMIN</div>
-            <div class="nav">
-                <button id="admin-logout-btn">Sair</button>
+    <div id="admin-dashboard" style="display: none;">
+        <header>
+            <div class="container header-container">
+                <div class="logo">Painel de Administração</div>
+                <button class="logout-btn" onclick="logout()">Sair</button>
             </div>
-        </div>
+        </header>
         
-        <div class="signal-box">
-            <h2>Controle de Sinais</h2>
-            
-            <div class="form-group">
-                <label for="signal-status-toggle">Status dos Sinais</label>
-                <select id="signal-status-toggle" class="form-control">
-                    <option value="off">SINAIS OFF</option>
-                    <option value="on">SINAIS ON</option>
-                </select>
+        <div class="container">
+            <div class="admin-panel">
+                <div class="admin-section">
+                    <h3>Configurações de Sinais</h3>
+                    <div class="toggle-signals">
+                        <label class="toggle-switch">
+                            <input type="checkbox" id="signal-toggle" onchange="toggleSignalStatus()">
+                            <span class="slider"></span>
+                        </label>
+                        <span id="admin-signal-status">Sinais: DESATIVADOS</span>
+                    </div>
+                </div>
+                
+                <div class="admin-section">
+                    <h3>Enviar Novos Sinais</h3>
+                    <div class="numbers-grid">
+                        <button class="number-btn btn-zero" onclick="selectNumber(0)">0</button>
+                        <button class="number-btn" onclick="selectNumber(1)">1</button>
+                        <button class="number-btn" onclick="selectNumber(2)">2</button>
+                        <button class="number-btn" onclick="selectNumber(3)">3</button>
+                        <button class="number-btn" onclick="selectNumber(4)">4</button>
+                        <button class="number-btn" onclick="selectNumber(5)">5</button>
+                        <button class="number-btn" onclick="selectNumber(6)">6</button>
+                        <button class="number-btn" onclick="selectNumber(7)">7</button>
+                        <button class="number-btn" onclick="selectNumber(8)">8</button>
+                        <button class="number-btn" onclick="selectNumber(9)">9</button>
+                        <button class="number-btn" onclick="selectNumber(10)">10</button>
+                        <button class="number-btn" onclick="selectNumber(11)">11</button>
+                        <button class="number-btn" onclick="selectNumber(12)">12</button>
+                        <button class="number-btn" onclick="selectNumber(13)">13</button>
+                        <button class="number-btn" onclick="selectNumber(14)">14</button>
+                        <button class="number-btn" onclick="selectNumber(15)">15</button>
+                        <button class="number-btn" onclick="selectNumber(16)">16</button>
+                        <button class="number-btn" onclick="selectNumber(17)">17</button>
+                        <button class="number-btn" onclick="selectNumber(18)">18</button>
+                        <button class="number-btn" onclick="selectNumber(19)">19</button>
+                        <button class="number-btn" onclick="selectNumber(20)">20</button>
+                        <button class="number-btn" onclick="selectNumber(21)">21</button>
+                        <button class="number-btn" onclick="selectNumber(22)">22</button>
+                        <button class="number-btn" onclick="selectNumber(23)">23</button>
+                        <button class="number-btn" onclick="selectNumber(24)">24</button>
+                        <button class="number-btn" onclick="selectNumber(25)">25</button>
+                        <button class="number-btn" onclick="selectNumber(26)">26</button>
+                        <button class="number-btn" onclick="selectNumber(27)">27</button>
+                        <button class="number-btn" onclick="selectNumber(28)">28</button>
+                        <button class="number-btn" onclick="selectNumber(29)">29</button>
+                        <button class="number-btn" onclick="selectNumber(30)">30</button>
+                        <button class="number-btn" onclick="selectNumber(31)">31</button>
+                        <button class="number-btn" onclick="selectNumber(32)">32</button>
+                        <button class="number-btn" onclick="selectNumber(33)">33</button>
+                        <button class="number-btn" onclick="selectNumber(34)">34</button>
+                        <button class="number-btn" onclick="selectNumber(35)">35</button>
+                        <button class="number-btn" onclick="selectNumber(36)">36</button>
+                    </div>
+                    
+                    <div>
+                        <p>Números selecionados:</p>
+                        <div id="selected-numbers" class="selected-numbers"></div>
+                    </div>
+                    
+                    <div class="action-buttons">
+                        <button class="action-btn send-btn" onclick="sendSignal()">Enviar Sinal</button>
+                        <button class="action-btn clear-btn" onclick="clearSelection()">Limpar Seleção</button>
+                    </div>
+                </div>
+                
+                <div class="admin-section">
+                    <h3>Sinais Atuais</h3>
+                    <div id="current-signals" class="current-signals">
+                        <!-- Signal items will be added here dynamically -->
+                    </div>
+                </div>
             </div>
-            
-            <h3>Selecione os Números</h3>
-            <div class="numbers-grid" id="numbers-grid">
-                <!-- Numbers will be generated by JavaScript -->
-            </div>
-            
-            <div class="actions">
-                <button id="send-signal-btn" class="btn btn-success">Enviar Sinal</button>
-                <button id="clear-signal-btn" class="btn btn-danger">Apagar Sinal</button>
-            </div>
-            
-            <h3>Prévia do Sinal</h3>
-            <div class="signal-message" id="admin-signal-preview">Nenhum número selecionado</div>
         </div>
     </div>
 
     <script>
-        // Users database (in a real application, this would be on a server)
+        // Store data in localStorage for demo purposes
+        // In a real application, you would use a backend server
+        
+        // Users data
         const users = {
-            'player1': '423525',
-            'player2': '321432',
-            'fdgrgdfg5e': '3rf43f3443g'
+            'player1': {
+                password: '423525',
+                role: 'member'
+            },
+            'player2': {
+                password: '321432',
+                role: 'member'
+            },
+            'fdgrgdfg5e': {
+                password: '3rf43f3443g',
+                role: 'admin'
+            }
         };
         
-        // Elements
-        const loginScreen = document.getElementById('login-screen');
-        const memberDashboard = document.getElementById('member-dashboard');
-        const adminDashboard = document.getElementById('admin-dashboard');
-        const usernameInput = document.getElementById('username');
-        const passwordInput = document.getElementById('password');
-        const loginBtn = document.getElementById('login-btn');
-        const loginError = document.getElementById('login-error');
-        const logoutBtn = document.getElementById('logout-btn');
-        const adminLogoutBtn = document.getElementById('admin-logout-btn');
-        const signalStatus = document.getElementById('signal-status');
-        const currentSignal = document.getElementById('current-signal');
-        const signalStatusToggle = document.getElementById('signal-status-toggle');
-        const numbersGrid = document.getElementById('numbers-grid');
-        const sendSignalBtn = document.getElementById('send-signal-btn');
-        const clearSignalBtn = document.getElementById('clear-signal-btn');
-        const adminSignalPreview = document.getElementById('admin-signal-preview');
-        
         // App state
-        let isSignalOn = false;
+        let currentUser = null;
+        let signalStatus = false;
         let selectedNumbers = [];
-        let currentSignalText = "Aguardando novo sinal...";
+        let currentSignals = [];
         
-        // Initialize the application
-        function init() {
-            createNumbersGrid();
-            setupEventListeners();
-            
-            // Check if user is already logged in
-            const loggedInUser = localStorage.getItem('loggedInUser');
-            if (loggedInUser) {
-                if (loggedInUser === 'fdgrgdfg5e') {
-                    showAdminDashboard();
-                } else {
-                    showMemberDashboard();
-                }
-            }
-            
-            // Load saved state
-            const savedSignalStatus = localStorage.getItem('signalStatus');
-            if (savedSignalStatus) {
-                isSignalOn = savedSignalStatus === 'on';
-                updateSignalStatus();
-            }
-            
-            const savedSignalText = localStorage.getItem('currentSignal');
-            if (savedSignalText) {
-                currentSignalText = savedSignalText;
-                currentSignal.textContent = currentSignalText;
-                adminSignalPreview.textContent = currentSignalText;
-            }
+        // Initialize local storage if first time
+        if (!localStorage.getItem('signalStatus')) {
+            localStorage.setItem('signalStatus', JSON.stringify(false));
         }
         
-        // Create the numbers grid (0-36)
-        function createNumbersGrid() {
-            for (let i = 0; i <= 36; i++) {
-                const numberBtn = document.createElement('div');
-                numberBtn.className = 'number-btn';
-                numberBtn.textContent = i;
-                numberBtn.dataset.number = i;
-                
-                // Add color classes based on roulette rules
-                if (i === 0) {
-                    numberBtn.classList.add('green');
-                } else if ([1,3,5,7,9,12,14,16,18,19,21,23,25,27,30,32,34,36].includes(i)) {
-                    numberBtn.classList.add('red');
-                } else {
-                    numberBtn.classList.add('black');
-                }
-                
-                numberBtn.addEventListener('click', () => toggleNumberSelection(i, numberBtn));
-                numbersGrid.appendChild(numberBtn);
-            }
+        if (!localStorage.getItem('currentSignals')) {
+            localStorage.setItem('currentSignals', JSON.stringify([]));
         }
         
-        // Set up event listeners
-        function setupEventListeners() {
-            // Login
-            loginBtn.addEventListener('click', handleLogin);
+        // Load data from localStorage
+        function loadData() {
+            signalStatus = JSON.parse(localStorage.getItem('signalStatus'));
+            currentSignals = JSON.parse(localStorage.getItem('currentSignals'));
             
-            // Logout buttons
-            logoutBtn.addEventListener('click', handleLogout);
-            adminLogoutBtn.addEventListener('click', handleLogout);
-            
-            // Admin controls
-            signalStatusToggle.addEventListener('change', () => {
-                isSignalOn = signalStatusToggle.value === 'on';
-                updateSignalStatus();
-                localStorage.setItem('signalStatus', signalStatusToggle.value);
-            });
-            
-            sendSignalBtn.addEventListener('click', sendSignal);
-            clearSignalBtn.addEventListener('click', clearSignal);
-            
-            // Enter key for login
-            passwordInput.addEventListener('keypress', (e) => {
-                if (e.key === 'Enter') {
-                    handleLogin();
-                }
-            });
+            updateUI();
         }
         
-        // Handle login attempt
-        function handleLogin() {
-            const username = usernameInput.value;
-            const password = passwordInput.value;
+        // Save data to localStorage
+        function saveData() {
+            localStorage.setItem('signalStatus', JSON.stringify(signalStatus));
+            localStorage.setItem('currentSignals', JSON.stringify(currentSignals));
+        }
+        
+        // Login function
+        function login() {
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
             
-            if (users[username] === password) {
-                localStorage.setItem('loggedInUser', username);
+            if (users[username] && users[username].password === password) {
+                currentUser = {
+                    username: username,
+                    role: users[username].role
+                };
                 
-                if (username === 'fdgrgdfg5e') {
-                    showAdminDashboard();
+                loadData();
+                
+                // Show appropriate dashboard
+                document.getElementById('login-page').style.display = 'none';
+                
+                if (currentUser.role === 'admin') {
+                    document.getElementById('admin-dashboard').style.display = 'block';
                 } else {
-                    showMemberDashboard();
+                    document.getElementById('member-dashboard').style.display = 'block';
                 }
                 
-                // Clear inputs
-                usernameInput.value = '';
-                passwordInput.value = '';
-                loginError.style.display = 'none';
+                updateUI();
             } else {
-                loginError.style.display = 'block';
-                loginError.classList.add('shake');
-                setTimeout(() => {
-                    loginError.classList.remove('shake');
-                }, 500);
+                alert('Usuário ou senha incorretos!');
             }
         }
         
-        // Handle logout
-        function handleLogout() {
-            localStorage.removeItem('loggedInUser');
-            showLoginScreen();
+        // Logout function
+        function logout() {
+            currentUser = null;
+            selectedNumbers = [];
+            
+            document.getElementById('login-page').style.display = 'flex';
+            document.getElementById('admin-dashboard').style.display = 'none';
+            document.getElementById('member-dashboard').style.display = 'none';
+            
+            document.getElementById('username').value = '';
+            document.getElementById('password').value = '';
         }
         
-        // Toggle number selection in admin panel
-        function toggleNumberSelection(number, element) {
+        // Toggle signal status
+        function toggleSignalStatus() {
+            signalStatus = document.getElementById('signal-toggle').checked;
+            saveData();
+            updateUI();
+        }
+        
+        // Select a number for signal
+        function selectNumber(number) {
             const index = selectedNumbers.indexOf(number);
             
             if (index === -1) {
                 selectedNumbers.push(number);
-                element.classList.add('selected');
+                document.querySelector(`.number-btn:nth-child(${number === 0 ? 1 : number + 1})`).classList.add('selected');
             } else {
                 selectedNumbers.splice(index, 1);
-                element.classList.remove('selected');
+                document.querySelector(`.number-btn:nth-child(${number === 0 ? 1 : number + 1})`).classList.remove('selected');
             }
             
-            updateSignalPreview();
+            updateSelectedNumbersDisplay();
         }
         
-        // Update signal preview in admin panel
-        function updateSignalPreview() {
+        // Update selected numbers display
+        function updateSelectedNumbersDisplay() {
+            const container = document.getElementById('selected-numbers');
+            
             if (selectedNumbers.length === 0) {
-                adminSignalPreview.textContent = "Nenhum número selecionado";
-                return;
+                container.textContent = 'Nenhum número selecionado';
+            } else {
+                container.textContent = selectedNumbers.sort((a, b) => a - b).join(', ');
             }
-            
-            const numbersText = selectedNumbers.join(' ');
-            adminSignalPreview.textContent = `APOSTAR NO ${numbersText} COM 3 VIZINHOS`;
         }
         
-        // Send signal to members
-        function sendSignal() {
-            if (selectedNumbers.length === 0) {
-                alert("Selecione pelo menos um número!");
-                return;
-            }
-            
-            const numbersText = selectedNumbers.join(' ');
-            const signalText = `APOSTAR NO ${numbersText} COM 3 VIZINHOS`;
-            
-            currentSignalText = signalText;
-            currentSignal.textContent = signalText;
-            
-            // Save to localStorage (in a real app, this would be a server call)
-            localStorage.setItem('currentSignal', signalText);
-            
-            // Animation feedback
-            sendSignalBtn.classList.add('pulse');
-            setTimeout(() => {
-                sendSignalBtn.classList.remove('pulse');
-            }, 2000);
-            
-            alert("Sinal enviado com sucesso!");
-        }
-        
-        // Clear signal
-        function clearSignal() {
+        // Clear number selection
+        function clearSelection() {
             selectedNumbers = [];
-            currentSignalText = "Aguardando novo sinal...";
-            currentSignal.textContent = currentSignalText;
-            adminSignalPreview.textContent = "Nenhum número selecionado";
-            
-            // Update UI
-            document.querySelectorAll('.number-btn.selected').forEach(btn => {
+            document.querySelectorAll('.number-btn').forEach(btn => {
                 btn.classList.remove('selected');
             });
-            
-            // Save to localStorage
-            localStorage.setItem('currentSignal', currentSignalText);
-            
-            // Animation feedback
-            clearSignalBtn.classList.add('pulse');
-            setTimeout(() => {
-                clearSignalBtn.classList.remove('pulse');
-            }, 2000);
-            
-            alert("Sinal apagado com sucesso!");
+            updateSelectedNumbersDisplay();
         }
         
-        // Update signal status display
-        function updateSignalStatus() {
-            if (isSignalOn) {
-                signalStatus.textContent = "SINAIS ON";
-                signalStatus.className = "status on";
-                signalStatusToggle.value = "on";
-            } else {
-                signalStatus.textContent = "SINAIS OFF";
-                signalStatus.className = "status off";
-                signalStatusToggle.value = "off";
+        // Send signal
+        function sendSignal() {
+            if (selectedNumbers.length === 0) {
+                alert('Selecione pelo menos um número!');
+                return;
+            }
+            
+            const numbers = [...selectedNumbers];
+            const signalText = `APOSTAR NO ${numbers.join(' ')} COM 3 VIZINHOS`;
+            
+            const newSignal = {
+                id: Date.now(),
+                text: signalText,
+                numbers: numbers
+            };
+            
+            currentSignals.push(newSignal);
+            saveData();
+            updateUI();
+            
+            // Clear selection after sending
+            clearSelection();
+        }
+        
+        // Delete signal
+        function deleteSignal(id) {
+            currentSignals = currentSignals.filter(signal => signal.id !== id);
+            saveData();
+            updateUI();
+        }
+        
+        // Update UI based on current state
+        function updateUI() {
+            // Update signal status indicators
+            if (currentUser && currentUser.role === 'admin') {
+                document.getElementById('signal-toggle').checked = signalStatus;
+                document.getElementById('admin-signal-status').textContent = `Sinais: ${signalStatus ? 'ATIVADOS' : 'DESATIVADOS'}`;
+                
+                // Update admin signal list
+                const signalsContainer = document.getElementById('current-signals');
+                signalsContainer.innerHTML = '';
+                
+                if (currentSignals.length === 0) {
+                    signalsContainer.innerHTML = '<p class="no-signal">Nenhum sinal enviado</p>';
+                } else {
+                    currentSignals.forEach(signal => {
+                        const signalItem = document.createElement('div');
+                        signalItem.className = 'signal-item';
+                        signalItem.innerHTML = `
+                            <div>${signal.text}</div>
+                            <button class="delete-signal" onclick="deleteSignal(${signal.id})">×</button>
+                        `;
+                        signalsContainer.appendChild(signalItem);
+                    });
+                }
+            } else if (currentUser && currentUser.role === 'member') {
+                const statusIndicator = document.getElementById('signal-status-indicator');
+                const statusText = document.getElementById('signal-status-text');
+                
+                if (signalStatus) {
+                    statusIndicator.className = 'status-indicator status-on';
+                    statusText.textContent = 'Sinais: ATIVADOS';
+                } else {
+                    statusIndicator.className = 'status-indicator status-off';
+                    statusText.textContent = 'Sinais: DESATIVADOS';
+                }
+                
+                // Update member signal display
+                const signalContainer = document.getElementById('current-signal');
+                
+                if (!signalStatus || currentSignals.length === 0) {
+                    signalContainer.className = 'no-signal';
+                    signalContainer.textContent = 'Nenhum sinal disponível no momento. Aguarde o próximo sinal.';
+                } else {
+                    // Show the most recent signal
+                    const latestSignal = currentSignals[currentSignals.length - 1];
+                    signalContainer.className = 'signal-message';
+                    signalContainer.textContent = latestSignal.text;
+                }
             }
         }
         
-        // Show login screen
-        function showLoginScreen() {
-            loginScreen.classList.remove('hidden');
-            memberDashboard.classList.add('hidden');
-            adminDashboard.classList.add('hidden');
-        }
-        
-        // Show member dashboard
-        function showMemberDashboard() {
-            loginScreen.classList.add('hidden');
-            memberDashboard.classList.remove('hidden');
-            adminDashboard.classList.add('hidden');
-            
-            // Update current signal and status
-            currentSignal.textContent = currentSignalText;
-            updateSignalStatus();
-        }
-        
-        // Show admin dashboard
-        function showAdminDashboard() {
-            loginScreen.classList.add('hidden');
-            memberDashboard.classList.add('hidden');
-            adminDashboard.classList.remove('hidden');
-            
-            // Update signal status toggle and preview
-            updateSignalStatus();
-            updateSignalPreview();
-        }
-        
-        // Initialize the app
-        init();
+        // For demonstration purposes, adding some sample data when the page loads
+        window.onload = function() {
+            // You can add initialization logic here if needed
+        };
     </script>
 </body>
 </html>
