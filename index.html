@@ -1,0 +1,627 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema de Sinais - Roleta</title>
+    <style>
+        :root {
+            --primary-color: #ff3366;
+            --secondary-color: #333;
+            --success-color: #28a745;
+            --danger-color: #dc3545;
+            --light-color: #f4f4f4;
+            --dark-color: #222;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #1a1a1a;
+            color: white;
+            min-height: 100vh;
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .login-container {
+            max-width: 400px;
+            margin: 50px auto;
+            background-color: rgba(0, 0, 0, 0.7);
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(255, 51, 102, 0.5);
+            animation: glow 2s infinite alternate;
+        }
+        
+        @keyframes glow {
+            from {
+                box-shadow: 0 0 10px rgba(255, 51, 102, 0.5);
+            }
+            to {
+                box-shadow: 0 0 20px rgba(255, 51, 102, 0.8);
+            }
+        }
+        
+        h1, h2, h3 {
+            color: var(--primary-color);
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            color: #ddd;
+        }
+        
+        .form-group input {
+            width: 100%;
+            padding: 10px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border: 1px solid #444;
+            border-radius: 5px;
+            color: white;
+            font-size: 16px;
+            transition: all 0.3s;
+        }
+        
+        .form-group input:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 5px rgba(255, 51, 102, 0.5);
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: all 0.3s;
+            text-transform: uppercase;
+            font-weight: bold;
+            letter-spacing: 1px;
+        }
+        
+        .btn:hover {
+            background-color: #ff1a4f;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(255, 51, 102, 0.4);
+        }
+        
+        .btn-block {
+            display: block;
+            width: 100%;
+        }
+        
+        .btn-danger {
+            background-color: var(--danger-color);
+        }
+        
+        .btn-danger:hover {
+            background-color: #c82333;
+        }
+        
+        .btn-success {
+            background-color: var(--success-color);
+        }
+        
+        .btn-success:hover {
+            background-color: #218838;
+        }
+        
+        .status {
+            text-align: center;
+            font-size: 24px;
+            font-weight: bold;
+            margin: 20px 0;
+            padding: 20px;
+            border-radius: 5px;
+            background-color: rgba(0, 0, 0, 0.5);
+        }
+        
+        .status.on {
+            color: #2ecc71;
+            text-shadow: 0 0 10px rgba(46, 204, 113, 0.5);
+        }
+        
+        .status.off {
+            color: #e74c3c;
+            text-shadow: 0 0 10px rgba(231, 76, 60, 0.5);
+        }
+        
+        .signal-box {
+            background-color: rgba(0, 0, 0, 0.7);
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 20px;
+            border: 1px solid #444;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+        
+        .signal-message {
+            font-size: 24px;
+            text-align: center;
+            padding: 20px;
+            background-color: rgba(255, 51, 102, 0.1);
+            border-radius: 5px;
+            margin: 20px 0;
+            color: white;
+            text-shadow: 0 0 5px rgba(255, 255, 255, 0.5);
+            letter-spacing: 1px;
+        }
+        
+        .numbers-grid {
+            display: grid;
+            grid-template-columns: repeat(6, 1fr);
+            gap: 10px;
+            margin: 20px 0;
+        }
+        
+        .number-btn {
+            background-color: #333;
+            color: white;
+            border: 2px solid #555;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .number-btn:hover {
+            background-color: #444;
+            transform: scale(1.05);
+        }
+        
+        .number-btn.red {
+            background-color: #e74c3c;
+        }
+        
+        .number-btn.black {
+            background-color: #2c3e50;
+        }
+        
+        .number-btn.green {
+            background-color: #27ae60;
+        }
+        
+        .number-btn.selected {
+            background-color: var(--primary-color);
+            border-color: white;
+            transform: scale(1.1);
+            box-shadow: 0 0 10px rgba(255, 51, 102, 0.7);
+        }
+        
+        .actions {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+        
+        .actions button {
+            flex: 1;
+            margin: 0 5px;
+        }
+        
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 0;
+            margin-bottom: 30px;
+            border-bottom: 1px solid #444;
+        }
+        
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            color: var(--primary-color);
+        }
+        
+        .nav button {
+            background: none;
+            border: none;
+            color: white;
+            cursor: pointer;
+            font-size: 16px;
+            margin-left: 20px;
+            transition: all 0.3s;
+        }
+        
+        .nav button:hover {
+            color: var(--primary-color);
+        }
+        
+        .hidden {
+            display: none;
+        }
+        
+        .fade-in {
+            animation: fadeIn 0.5s;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        .shake {
+            animation: shake 0.5s;
+        }
+        
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
+            20%, 40%, 60%, 80% { transform: translateX(5px); }
+        }
+        
+        .pulse {
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+    </style>
+</head>
+<body>
+    <!-- Login Screen -->
+    <div id="login-screen" class="container">
+        <div class="login-container fade-in">
+            <h1>Sistema de Sinais</h1>
+            <div class="form-group">
+                <label for="username">Usuário</label>
+                <input type="text" id="username" placeholder="Digite seu usuário">
+            </div>
+            <div class="form-group">
+                <label for="password">Senha</label>
+                <input type="password" id="password" placeholder="Digite sua senha">
+            </div>
+            <button id="login-btn" class="btn btn-block">Entrar</button>
+            <p id="login-error" style="color: #e74c3c; margin-top: 10px; text-align: center; display: none;">Usuário ou senha incorretos.</p>
+        </div>
+    </div>
+
+    <!-- Member Dashboard -->
+    <div id="member-dashboard" class="container hidden">
+        <div class="header">
+            <div class="logo">Roleta Sinais</div>
+            <div class="nav">
+                <button id="logout-btn">Sair</button>
+            </div>
+        </div>
+        
+        <div class="status" id="signal-status">SINAIS OFF</div>
+        
+        <div class="signal-box">
+            <h2>Sinal Atual</h2>
+            <div class="signal-message" id="current-signal">Aguardando novo sinal...</div>
+        </div>
+    </div>
+
+    <!-- Admin Dashboard -->
+    <div id="admin-dashboard" class="container hidden">
+        <div class="header">
+            <div class="logo">Roleta Sinais - ADMIN</div>
+            <div class="nav">
+                <button id="admin-logout-btn">Sair</button>
+            </div>
+        </div>
+        
+        <div class="signal-box">
+            <h2>Controle de Sinais</h2>
+            
+            <div class="form-group">
+                <label for="signal-status-toggle">Status dos Sinais</label>
+                <select id="signal-status-toggle" class="form-control">
+                    <option value="off">SINAIS OFF</option>
+                    <option value="on">SINAIS ON</option>
+                </select>
+            </div>
+            
+            <h3>Selecione os Números</h3>
+            <div class="numbers-grid" id="numbers-grid">
+                <!-- Numbers will be generated by JavaScript -->
+            </div>
+            
+            <div class="actions">
+                <button id="send-signal-btn" class="btn btn-success">Enviar Sinal</button>
+                <button id="clear-signal-btn" class="btn btn-danger">Apagar Sinal</button>
+            </div>
+            
+            <h3>Prévia do Sinal</h3>
+            <div class="signal-message" id="admin-signal-preview">Nenhum número selecionado</div>
+        </div>
+    </div>
+
+    <script>
+        // Users database (in a real application, this would be on a server)
+        const users = {
+            'player1': '423525',
+            'player2': '321432',
+            'fdgrgdfg5e': '3rf43f3443g'
+        };
+        
+        // Elements
+        const loginScreen = document.getElementById('login-screen');
+        const memberDashboard = document.getElementById('member-dashboard');
+        const adminDashboard = document.getElementById('admin-dashboard');
+        const usernameInput = document.getElementById('username');
+        const passwordInput = document.getElementById('password');
+        const loginBtn = document.getElementById('login-btn');
+        const loginError = document.getElementById('login-error');
+        const logoutBtn = document.getElementById('logout-btn');
+        const adminLogoutBtn = document.getElementById('admin-logout-btn');
+        const signalStatus = document.getElementById('signal-status');
+        const currentSignal = document.getElementById('current-signal');
+        const signalStatusToggle = document.getElementById('signal-status-toggle');
+        const numbersGrid = document.getElementById('numbers-grid');
+        const sendSignalBtn = document.getElementById('send-signal-btn');
+        const clearSignalBtn = document.getElementById('clear-signal-btn');
+        const adminSignalPreview = document.getElementById('admin-signal-preview');
+        
+        // App state
+        let isSignalOn = false;
+        let selectedNumbers = [];
+        let currentSignalText = "Aguardando novo sinal...";
+        
+        // Initialize the application
+        function init() {
+            createNumbersGrid();
+            setupEventListeners();
+            
+            // Check if user is already logged in
+            const loggedInUser = localStorage.getItem('loggedInUser');
+            if (loggedInUser) {
+                if (loggedInUser === 'fdgrgdfg5e') {
+                    showAdminDashboard();
+                } else {
+                    showMemberDashboard();
+                }
+            }
+            
+            // Load saved state
+            const savedSignalStatus = localStorage.getItem('signalStatus');
+            if (savedSignalStatus) {
+                isSignalOn = savedSignalStatus === 'on';
+                updateSignalStatus();
+            }
+            
+            const savedSignalText = localStorage.getItem('currentSignal');
+            if (savedSignalText) {
+                currentSignalText = savedSignalText;
+                currentSignal.textContent = currentSignalText;
+                adminSignalPreview.textContent = currentSignalText;
+            }
+        }
+        
+        // Create the numbers grid (0-36)
+        function createNumbersGrid() {
+            for (let i = 0; i <= 36; i++) {
+                const numberBtn = document.createElement('div');
+                numberBtn.className = 'number-btn';
+                numberBtn.textContent = i;
+                numberBtn.dataset.number = i;
+                
+                // Add color classes based on roulette rules
+                if (i === 0) {
+                    numberBtn.classList.add('green');
+                } else if ([1,3,5,7,9,12,14,16,18,19,21,23,25,27,30,32,34,36].includes(i)) {
+                    numberBtn.classList.add('red');
+                } else {
+                    numberBtn.classList.add('black');
+                }
+                
+                numberBtn.addEventListener('click', () => toggleNumberSelection(i, numberBtn));
+                numbersGrid.appendChild(numberBtn);
+            }
+        }
+        
+        // Set up event listeners
+        function setupEventListeners() {
+            // Login
+            loginBtn.addEventListener('click', handleLogin);
+            
+            // Logout buttons
+            logoutBtn.addEventListener('click', handleLogout);
+            adminLogoutBtn.addEventListener('click', handleLogout);
+            
+            // Admin controls
+            signalStatusToggle.addEventListener('change', () => {
+                isSignalOn = signalStatusToggle.value === 'on';
+                updateSignalStatus();
+                localStorage.setItem('signalStatus', signalStatusToggle.value);
+            });
+            
+            sendSignalBtn.addEventListener('click', sendSignal);
+            clearSignalBtn.addEventListener('click', clearSignal);
+            
+            // Enter key for login
+            passwordInput.addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') {
+                    handleLogin();
+                }
+            });
+        }
+        
+        // Handle login attempt
+        function handleLogin() {
+            const username = usernameInput.value;
+            const password = passwordInput.value;
+            
+            if (users[username] === password) {
+                localStorage.setItem('loggedInUser', username);
+                
+                if (username === 'fdgrgdfg5e') {
+                    showAdminDashboard();
+                } else {
+                    showMemberDashboard();
+                }
+                
+                // Clear inputs
+                usernameInput.value = '';
+                passwordInput.value = '';
+                loginError.style.display = 'none';
+            } else {
+                loginError.style.display = 'block';
+                loginError.classList.add('shake');
+                setTimeout(() => {
+                    loginError.classList.remove('shake');
+                }, 500);
+            }
+        }
+        
+        // Handle logout
+        function handleLogout() {
+            localStorage.removeItem('loggedInUser');
+            showLoginScreen();
+        }
+        
+        // Toggle number selection in admin panel
+        function toggleNumberSelection(number, element) {
+            const index = selectedNumbers.indexOf(number);
+            
+            if (index === -1) {
+                selectedNumbers.push(number);
+                element.classList.add('selected');
+            } else {
+                selectedNumbers.splice(index, 1);
+                element.classList.remove('selected');
+            }
+            
+            updateSignalPreview();
+        }
+        
+        // Update signal preview in admin panel
+        function updateSignalPreview() {
+            if (selectedNumbers.length === 0) {
+                adminSignalPreview.textContent = "Nenhum número selecionado";
+                return;
+            }
+            
+            const numbersText = selectedNumbers.join(' ');
+            adminSignalPreview.textContent = `APOSTAR NO ${numbersText} COM 3 VIZINHOS`;
+        }
+        
+        // Send signal to members
+        function sendSignal() {
+            if (selectedNumbers.length === 0) {
+                alert("Selecione pelo menos um número!");
+                return;
+            }
+            
+            const numbersText = selectedNumbers.join(' ');
+            const signalText = `APOSTAR NO ${numbersText} COM 3 VIZINHOS`;
+            
+            currentSignalText = signalText;
+            currentSignal.textContent = signalText;
+            
+            // Save to localStorage (in a real app, this would be a server call)
+            localStorage.setItem('currentSignal', signalText);
+            
+            // Animation feedback
+            sendSignalBtn.classList.add('pulse');
+            setTimeout(() => {
+                sendSignalBtn.classList.remove('pulse');
+            }, 2000);
+            
+            alert("Sinal enviado com sucesso!");
+        }
+        
+        // Clear signal
+        function clearSignal() {
+            selectedNumbers = [];
+            currentSignalText = "Aguardando novo sinal...";
+            currentSignal.textContent = currentSignalText;
+            adminSignalPreview.textContent = "Nenhum número selecionado";
+            
+            // Update UI
+            document.querySelectorAll('.number-btn.selected').forEach(btn => {
+                btn.classList.remove('selected');
+            });
+            
+            // Save to localStorage
+            localStorage.setItem('currentSignal', currentSignalText);
+            
+            // Animation feedback
+            clearSignalBtn.classList.add('pulse');
+            setTimeout(() => {
+                clearSignalBtn.classList.remove('pulse');
+            }, 2000);
+            
+            alert("Sinal apagado com sucesso!");
+        }
+        
+        // Update signal status display
+        function updateSignalStatus() {
+            if (isSignalOn) {
+                signalStatus.textContent = "SINAIS ON";
+                signalStatus.className = "status on";
+                signalStatusToggle.value = "on";
+            } else {
+                signalStatus.textContent = "SINAIS OFF";
+                signalStatus.className = "status off";
+                signalStatusToggle.value = "off";
+            }
+        }
+        
+        // Show login screen
+        function showLoginScreen() {
+            loginScreen.classList.remove('hidden');
+            memberDashboard.classList.add('hidden');
+            adminDashboard.classList.add('hidden');
+        }
+        
+        // Show member dashboard
+        function showMemberDashboard() {
+            loginScreen.classList.add('hidden');
+            memberDashboard.classList.remove('hidden');
+            adminDashboard.classList.add('hidden');
+            
+            // Update current signal and status
+            currentSignal.textContent = currentSignalText;
+            updateSignalStatus();
+        }
+        
+        // Show admin dashboard
+        function showAdminDashboard() {
+            loginScreen.classList.add('hidden');
+            memberDashboard.classList.add('hidden');
+            adminDashboard.classList.remove('hidden');
+            
+            // Update signal status toggle and preview
+            updateSignalStatus();
+            updateSignalPreview();
+        }
+        
+        // Initialize the app
+        init();
+    </script>
+</body>
+</html>
